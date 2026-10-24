@@ -32,6 +32,22 @@ TARGET_WORDS = (
     "cough",
     "throat clearing",
     "throat clear",
+    "arroto",
+    "arrotou",
+    "arrota",
+    "arrotar",
+    "arrotam",
+    "arrotando",
+    "arrotei",
+    "arrotinho",
+    "arrotão",
+    "roto",
+    "rotou",
+    "rota",
+    "rotar",
+    "rotam",
+    "rotando",
+    "rotei",
 )
 
 model = None
@@ -116,15 +132,13 @@ def download_audio(url, folder):
     try:
         with yt_dlp.YoutubeDL(options) as downloader:
             downloader.download([str(url)])
+    
     except Exception as exc:
         raise HTTPException(
             status_code=422,
-            detail=(
-                "Não foi possível baixar o áudio do YouTube. "
-                "O vídeo pode estar indisponível ou o serviço "
-                "pode não conseguir acessá-lo."
-            ),
+            detail=f"Erro do yt-dlp: {type(exc).__name__}: {exc}",
         ) from exc
+
 
     audio_path = Path(folder) / "audio.wav"
 
