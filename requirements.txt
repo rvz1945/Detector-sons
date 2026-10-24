@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-yt-dlp
+yt-dlp[default]
 pydub
 tensorflow
 tensorflow-hub
