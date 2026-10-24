@@ -22,10 +22,6 @@ from functools import lru_cache
 
 
 MODEL_URL = "https://tfhub.dev/google/yamnet/1"
-LABELS_URL = (
-    "https://storage.googleapis.com/audioset/"
-    "yamnet/yamnet_class_map.csv"
-)
 THRESHOLD = 0.70
 
 TARGET_WORDS = (
@@ -43,16 +39,15 @@ labels = []
 analysis_lock = threading.Lock()
 
 
+
 def load_labels():
-    path = tf.keras.utils.get_file(
-        fname="yamnet_class_map.csv",
-        origin=LABELS_URL,
-    )
+    path = model.class_map_path().numpy().decode("utf-8")
     with open(path, newline="", encoding="utf-8") as f:
         return [
             row["display_name"]
             for row in csv.DictReader(f)
         ]
+
 
 
 @asynccontextmanager
